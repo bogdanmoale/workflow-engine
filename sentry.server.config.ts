@@ -11,4 +11,5 @@ Sentry.init({
   // Add data like inputs and responses to/from LLMs and tools;
   // see https://docs.sentry.io/platforms/javascript/data-management/data-collected/ for more info
   sendDefaultPii: true,
+  enabled: process.env.NODE_ENV !== "development",
 });
