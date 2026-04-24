@@ -7,7 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "inngest": "npx inngest-cli@latest dev"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -25,6 +26,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "inngest": "^4.2.4",
     "input-otp": "^1.4.2",
     "lucide-react": "^1.9.0",
     "next": "15.5.15",
