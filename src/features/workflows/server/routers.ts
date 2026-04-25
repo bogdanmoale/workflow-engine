@@ -9,7 +9,7 @@ import {
 import z from "zod";
 
 export const workflowsRouter = createTRPCRouter({
-  create: protectedProcedure.mutation(({ ctx }) => {
+  create: premiumProcedure.mutation(({ ctx }) => {
     return prisma.workflow.create({
       data: {
         name: generateSlug(3),
