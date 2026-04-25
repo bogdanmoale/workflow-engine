@@ -26,6 +26,7 @@ export const workflowsRouter = createTRPCRouter({
       },
     });
   }),
+
   remove: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
