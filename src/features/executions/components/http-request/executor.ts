@@ -4,10 +4,16 @@ import ky, { type Options as KyOptions } from "ky";
 import type { NodeExecutor } from "@/features/executions/types";
 
 Handlebars.registerHelper("json", (context) => {
-  const jsonString = JSON.stringify(context, null, 2);
-  const safeString = new Handlebars.SafeString(jsonString);
+  try {
+    const jsonString = JSON.stringify(context, null, 2);
+    const safeString = new Handlebars.SafeString(jsonString);
 
-  return safeString;
+    return safeString;
+  } catch (error) {
+    throw new Error(
+      `Faild to serialize JSON: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
 });
 
 type HttpRequestData = {
@@ -43,7 +49,22 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
   }
 
   const result = await step.run("http-request", async () => {
-    const endpoint = Handlebars.compile(data.endpoint)(context);
+    // const endpoint = Handlebars.compile(data.endpoint)(context);
+
+    let endpoint: string;
+    try {
+      const template = Handlebars.compile(data.endpoint);
+      endpoint = template(context);
+
+      if (!endpoint || typeof endpoint !== "string") {
+        throw new Error("Endpoint template did not resolve to a string");
+      }
+    } catch (error) {
+      throw new NonRetriableError(
+        `HTTP Request node: Failed to resolve endpoint template: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
     const method = data.method;
 
     const options: KyOptions = { method };
