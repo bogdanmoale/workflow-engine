@@ -60,6 +60,12 @@ const executionNodes: NodeTypeOption[] = [
     description: "Uses Google Gemini to generate text",
     icon: "/logos/gemini.svg",
   },
+  {
+    type: NodeType.ANTHROPIC,
+    label: "Anthropic",
+    description: "Uses Anthropic to generate text",
+    icon: "/logos/anthropic.svg",
+  },
 ];
 
 interface NodeSelectorProps {
