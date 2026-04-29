@@ -9,6 +9,8 @@ import { manualTriggerChannel } from "./channels/manual-trigger";
 import { googleFormTriggerChannel } from "./channels/google-form-trigger";
 import { stripeTriggerChannel } from "./channels/stripe-trigger";
 import { geminiChannel } from "./channels/gemini";
+import { anthropicChannel } from "./channels/anthropic";
+import { openAiChannel } from "./channels/openai";
 
 export const executeWorkflow = inngest.createFunction(
   { id: "execute-workflow", retries: 0 }, //TODO : change for production, add exponential backoff
@@ -20,6 +22,8 @@ export const executeWorkflow = inngest.createFunction(
       googleFormTriggerChannel(),
       stripeTriggerChannel(),
       geminiChannel(),
+      anthropicChannel(),
+      openAiChannel(),
     ],
   },
   async ({ event, step, publish }) => {
