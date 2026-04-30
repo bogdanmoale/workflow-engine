@@ -87,7 +87,7 @@ export const workflowsRouter = createTRPCRouter({
       });
 
       // Transaction to ensure consistency
-      return await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx) => {
         // Delete existing nodes and connections (cascade deletes connections)
         await tx.node.deleteMany({
           where: { workflowId: id },
@@ -121,9 +121,35 @@ export const workflowsRouter = createTRPCRouter({
           where: { id },
           data: { updatedAt: new Date() },
         });
-
-        return workflow;
       });
+
+      // Activate or reschedule the timer trigger if present.
+      const timerNode = nodes.find((n) => n.type === NodeType.TIMER_TRIGGER);
+
+      // Always cancel any running timer for this workflow before (re)scheduling.
+      await inngest.send({ name: "timer/cancel", data: { workflowId: id } });
+
+      if (timerNode?.data) {
+        const timerData = timerNode.data as {
+          mode?: string;
+          scheduledAt?: string;
+          cronExpression?: string;
+        };
+
+        if (timerData.mode === "date" && timerData.scheduledAt) {
+          await inngest.send({
+            name: "timer/date.schedule",
+            data: { workflowId: id, scheduledAt: timerData.scheduledAt },
+          });
+        } else if (timerData.mode === "cycle" && timerData.cronExpression) {
+          await inngest.send({
+            name: "timer/cycle.start",
+            data: { workflowId: id, cronExpression: timerData.cronExpression },
+          });
+        }
+      }
+
+      return workflow;
     }),
 
   updateName: protectedProcedure

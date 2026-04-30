@@ -2,7 +2,7 @@
 
 import { createId } from "@paralleldrive/cuid2";
 import { useReactFlow } from "@xyflow/react";
-import { GlobeIcon, MousePointerIcon } from "lucide-react";
+import { GlobeIcon, MousePointerIcon, TimerIcon } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import {
@@ -44,6 +44,12 @@ const triggerNodes: NodeTypeOption[] = [
     label: "Stripe",
     description: "Runs the flow when a Stripe event is captured",
     icon: "/logos/stripe.svg",
+  },
+  {
+    type: NodeType.TIMER_TRIGGER,
+    label: "Timer",
+    description: "Runs the flow once at a specific date or on a cron schedule",
+    icon: TimerIcon,
   },
 ];
 
