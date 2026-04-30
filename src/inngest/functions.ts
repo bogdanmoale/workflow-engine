@@ -15,6 +15,7 @@ import { openAiChannel } from "./channels/openai";
 import { anthropicChannel } from "./channels/anthropic";
 import { discordChannel } from "./channels/discord";
 import { slackChannel } from "./channels/slack";
+import { workflowExecutionStartedChannel } from "./channels/workflow-execution-started";
 
 // Restart the cycle function after this many iterations to stay within Inngest's step limit.
 const MAX_CYCLE_ITERATIONS = 300;
@@ -111,6 +112,7 @@ export const executeWorkflow = inngest.createFunction(
   {
     event: "workflows/execute.workflow",
     channels: [
+      workflowExecutionStartedChannel(),
       httpRequestChannel(),
       manualTriggerChannel(),
       googleFormTriggerChannel(),
@@ -130,6 +132,14 @@ export const executeWorkflow = inngest.createFunction(
     if (!inngestEventId || !workflowId) {
       throw new NonRetriableError("Event ID or workflow ID is missing");
     }
+
+    // Signal all nodes in the editor to reset their status to "initial".
+    await publish(
+      workflowExecutionStartedChannel().started({
+        workflowId,
+        startedAt: new Date().toISOString(),
+      }),
+    );
 
     await step.run("create-execution", async () => {
       return prisma.execution.create({

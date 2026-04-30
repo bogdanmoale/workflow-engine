@@ -1,7 +1,9 @@
 import type { Realtime } from "@inngest/realtime";
 import { useInngestSubscription } from "@inngest/realtime/hooks";
+import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import type { NodeStatus } from "@/components/react-flow/node-status-indicator";
+import { executionResetAtom } from "@/features/editor/store/atoms";
 
 interface UseNodeStatusOptions {
   nodeId: string;
@@ -17,11 +19,17 @@ export function useNodeStatus({
   refreshToken,
 }: UseNodeStatusOptions) {
   const [status, setStatus] = useState<NodeStatus>("initial");
+  const resetCount = useAtomValue(executionResetAtom);
 
   const { data } = useInngestSubscription({
     refreshToken,
     enabled: true,
   });
+
+  // Reset to "initial" whenever a new workflow execution begins.
+  useEffect(() => {
+    setStatus("initial");
+  }, [resetCount]);
 
   useEffect(() => {
     if (!data?.length) {
