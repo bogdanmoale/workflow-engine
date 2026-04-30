@@ -23,6 +23,7 @@ type AnthropicData = {
 export const anthropicExecutor: NodeExecutor<AnthropicData> = async ({
   data,
   nodeId,
+  userId,
   context,
   step,
   publish,
@@ -41,7 +42,7 @@ export const anthropicExecutor: NodeExecutor<AnthropicData> = async ({
         status: "error",
       }),
     );
-    throw new NonRetriableError("OpenAi node: Variable name is missing");
+    throw new NonRetriableError("Anthropic node: Variable name is missing");
   }
 
   if (!data.credentialId) {
@@ -61,7 +62,7 @@ export const anthropicExecutor: NodeExecutor<AnthropicData> = async ({
         status: "error",
       }),
     );
-    throw new NonRetriableError("OpenAi node: User prompt is missing");
+    throw new NonRetriableError("Anthropic node: User prompt is missing");
   }
 
   const systemPrompt = data.systemPrompt
@@ -72,7 +73,8 @@ export const anthropicExecutor: NodeExecutor<AnthropicData> = async ({
   const credential = await step.run("get-credential", () => {
     return prisma.credential.findUnique({
       where: {
-        id: data.credentialId!,
+        id: data.credentialId,
+        userId,
       },
     });
   });
