@@ -79,6 +79,9 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         snapGrid={[10, 10]}
         snapToGrid
         panOnScroll
+        panOnDrag={false}
+        selectionOnDrag
+        panActivationKeyCode="Space"
       >
         <Background />
         <Controls />
