@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useTheme } from "next-themes";
 import type { ColorMode } from "@xyflow/react";
 import {
@@ -39,7 +39,12 @@ export const EditorError = () => {
 
 export const Editor = ({ workflowId }: { workflowId: string }) => {
   const { data: workflow } = useSuspenseWorkflow(workflowId);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [colorMode, setColorMode] = useState<ColorMode>("light");
+
+  useEffect(() => {
+    if (resolvedTheme) setColorMode(resolvedTheme as ColorMode);
+  }, [resolvedTheme]);
 
   const setEditor = useSetAtom(editorAtom);
 
@@ -76,7 +81,7 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         onConnect={onConnect}
         nodeTypes={nodeComponents}
         onInit={setEditor}
-        colorMode={(theme as ColorMode) ?? "system"}
+        colorMode={colorMode}
         fitView
         snapGrid={[10, 10]}
         snapToGrid
