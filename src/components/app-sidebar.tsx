@@ -61,11 +61,11 @@ export const AppSidebar = () => {
             <Link href="/" prefetch>
               <Image
                 src="/logos/logo.svg"
-                alt="Nodebase"
+                alt="Orchio"
                 width={30}
                 height={30}
               />
-              <span className="font-semibold text-sm">Nodebase</span>
+              <span className="font-semibold text-sm">Orchio</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

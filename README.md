@@ -1,4 +1,4 @@
-# Nodebase
+# Orchio
 
 A visual workflow automation platform built with Next.js. Connect nodes in a drag-and-drop editor to automate tasks across AI providers, APIs, and third-party services — then watch them execute in real time.
 
