@@ -62,21 +62,21 @@ Full history of every workflow run with status, duration, and timestamps.
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 15 (App Router, Turbopack) |
-| Language | TypeScript |
-| Database | PostgreSQL + Prisma ORM |
-| Workflow engine | Inngest + Inngest Realtime |
-| API layer | tRPC + TanStack Query |
-| AI / LLM | Vercel AI SDK (Anthropic, OpenAI, Google) |
-| Auth | Better Auth |
-| UI | Tailwind CSS v4, Radix UI, shadcn/ui |
-| Graph / canvas | React Flow (xyflow) |
-| State | Jotai |
-| Billing | Polar |
-| Error tracking | Sentry |
-| Linting / formatting | Biome |
+| Layer                | Technology                                |
+| -------------------- | ----------------------------------------- |
+| Framework            | Next.js 15 (App Router, Turbopack)        |
+| Language             | TypeScript                                |
+| Database             | PostgreSQL + Prisma ORM                   |
+| Workflow engine      | Inngest + Inngest Realtime                |
+| API layer            | tRPC + TanStack Query                     |
+| AI / LLM             | Vercel AI SDK (Anthropic, OpenAI, Google) |
+| Auth                 | Better Auth                               |
+| UI                   | Tailwind CSS v4, Radix UI, shadcn/ui      |
+| Graph / canvas       | React Flow (xyflow)                       |
+| State                | Jotai                                     |
+| Billing              | Polar                                     |
+| Error tracking       | Sentry                                    |
+| Linting / formatting | Biome                                     |
 
 ---
 
@@ -100,28 +100,6 @@ Copy `.env.example` to `.env` and fill in the required values:
 
 ```bash
 cp .env.example .env
-```
-
-Key variables:
-
-```env
-DATABASE_URL=postgresql://user:password@localhost:5432/nodebase
-
-BETTER_AUTH_SECRET=...
-BETTER_AUTH_URL=http://localhost:3000
-
-GITHUB_CLIENT_ID=...
-GITHUB_CLIENT_SECRET=...
-
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-
-INNGEST_EVENT_KEY=...
-INNGEST_SIGNING_KEY=...
-
-POLAR_ACCESS_TOKEN=...
-
-ENCRYPTION_KEY=...
 ```
 
 ### 3. Run database migrations
@@ -167,17 +145,17 @@ src/
 
 ## Available Node Types
 
-| Node | Description |
-|---|---|
-| Trigger manually | Starts the workflow on button click |
-| Google Form | Fires when a form is submitted |
-| Stripe | Fires on a Stripe event |
-| HTTP Request | Makes an outbound HTTP call |
-| Gemini | Generates text with Google Gemini |
-| Anthropic | Generates text with Claude |
-| OpenAI | Generates text with GPT |
-| Discord | Sends a message to a Discord channel |
-| Slack | Sends a message to a Slack channel |
+| Node             | Description                          |
+| ---------------- | ------------------------------------ |
+| Trigger manually | Starts the workflow on button click  |
+| Google Form      | Fires when a form is submitted       |
+| Stripe           | Fires on a Stripe event              |
+| HTTP Request     | Makes an outbound HTTP call          |
+| Gemini           | Generates text with Google Gemini    |
+| Anthropic        | Generates text with Claude           |
+| OpenAI           | Generates text with GPT              |
+| Discord          | Sends a message to a Discord channel |
+| Slack            | Sends a message to a Slack channel   |
 
 ---
 
