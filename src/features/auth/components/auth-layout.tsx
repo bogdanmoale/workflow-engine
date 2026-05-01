@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="bg-muted flex min-h-svh flex-col justify-center items-center gap-6 p-6 md:p-10">
+      <div className="absolute top-4 right-4">
+        <ModeToggle />
+      </div>
       <div className="flex w-full max-w-sm flex-col gap-6">
         <Link
           href="/"
